@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mini GTA Arena</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+    canvas {
+      background: #333;
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mini GTA Arena</h1>
+  <p>Move: W A S D | Arrow Keys</p>
+
+  <canvas id="game" width="800" height="500"></canvas>
+
+  <script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+
+    let player = { x: 400, y: 250, size: 20, speed: 4 };
+    let keys = {};
+
+    document.addEventListener("keydown", e => keys[e.key] = true);
+    document.addEventListener("keyup", e => keys[e.key] = false);
+
+    function update() {
+      if (keys["w"] || keys["ArrowUp"]) player.y -= player.speed;
+      if (keys["s"] || keys["ArrowDown"]) player.y += player.speed;
+      if (keys["a"] || keys["ArrowLeft"]) player.x -= player.speed;
+      if (keys["d"] || keys["ArrowRight"]) player.x += player.speed;
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "red";
+      ctx.fillRect(player.x, player.y, player.size, player.size);
+    }
+
+    function gameLoop() {
+      update();
+      draw();
+      requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();
+  </script>
+</body>
+</html>
